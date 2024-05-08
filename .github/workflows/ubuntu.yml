@@ -19,21 +19,21 @@ jobs:
         env:
           DH_VIRTUALENV_INSTALL_ROOT: /opt
         run: |
-          mv deploy/ubuntu debian
+          mv deploy/debian_privacyidea debian
           sed -i 's/{{CODENAME}}/jammy/g' debian/changelog
           sudo mk-build-deps -ri
           dpkg-buildpackage -us -uc -b --source-option=-Sa
           rm -r debian
       - name: Build server packages
         run: |
-          mv deploy/ubuntu-server debian
+          mv deploy/debian_server debian
           sed -i 's/{{CODENAME}}/jammy/g' debian/changelog
           sudo mk-build-deps -ri
           dpkg-buildpackage -us -uc -b
           rm -r debian
       - name: Build radius packages
         run: |
-          mv deploy/ubuntu-radius debian
+          mv deploy/debian_radius debian
           sed -i 's/{{CODENAME}}/jammy/g' debian/changelog
           sudo mk-build-deps -ri
           dpkg-buildpackage -us -uc -b
@@ -55,21 +55,21 @@ jobs:
         env:
           DH_VIRTUALENV_INSTALL_ROOT: /opt
         run: |
-          mv deploy/ubuntu debian
+          mv deploy/debian_privacyidea debian
           sed -i 's/{{CODENAME}}/focal/g' debian/changelog
           sudo mk-build-deps -ri
           dpkg-buildpackage -us -uc -b
           rm -r debian
       - name: Build server packages
         run: |
-          mv deploy/ubuntu-server debian
+          mv deploy/debian_server debian
           sed -i 's/{{CODENAME}}/focal/g' debian/changelog
           sudo mk-build-deps -ri
           dpkg-buildpackage -us -uc -b
           rm -r debian
       - name: Build radius packages
         run: |
-          mv deploy/ubuntu-radius debian
+          mv deploy/debian_radius debian
           sed -i 's/{{CODENAME}}/focal/g' debian/changelog
           sudo mk-build-deps -ri
           dpkg-buildpackage -us -uc -b
