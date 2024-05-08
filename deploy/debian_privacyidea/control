@@ -1,0 +1,26 @@
+Source: privacyidea
+Maintainer: Cornelius Kölbel <cornelius.koelbel@netknights.it>
+Section: python
+Priority: optional
+Build-Depends: python3-all (>= 3.5), debhelper (>= 7.4.3), dh-virtualenv (>= 0.11), quilt, virtualenv, lsb-release, git
+Standards-Version: 3.9.5
+
+Package: privacyidea
+Architecture: amd64
+Replaces: python-privacyidea (<< 3.0)
+Breaks: python-privacyidea (<< 3.0)
+Conflicts: privacyidea-venv, pi-appliance (<= 2.1)
+Pre-Depends: dpkg (>= 1.16.1), python3-minimal, ${misc:Pre-Depends}
+Depends: ${python:Depends}, ${misc:Depends}, python3-virtualenv
+X-Python-Version: >= 3.5
+Description: two-factor authentication system e.g. for OTP devices
+ privacyIDEA: identity, multifactor authentication, authorization.
+ This package contains the python module for privacyIDEA. If you want
+ to run it in a productive webserver you might want to install
+ privacyidea-nginx or privacyidea-apache2.
+ privacyIDEA is an open solution for strong two-factor authentication.
+ privacyIDEA aims to not bind you to any decision of the authentication protocol
+ or it does not dictate you where your user information should be stored.
+ This is achieved by its totally modular architecture.
+ privacyIDEA is not only open as far as its modular architecture is concerned.
+ But privacyIDEA is completely licensed under the AGPLv3.
