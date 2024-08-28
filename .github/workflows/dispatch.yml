@@ -13,5 +13,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.MY_PAT_TOKEN }}
-          repository: pablo-knight/ubuntu-test-build.git
+          repository: pablo-knight/ubuntu-test-build
           event-type: tag-created
