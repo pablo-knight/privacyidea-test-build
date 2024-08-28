@@ -1,0 +1,17 @@
+name: Trigger Dispatch on Tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Dispatch Event
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.MY_PAT_TOKEN }}
+          repository: pablo-knight/ubuntu-test-build.git
+          event-type: tag-created
