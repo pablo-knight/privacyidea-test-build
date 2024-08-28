@@ -15,3 +15,4 @@ jobs:
           token: ${{ secrets.MY_PAT_TOKEN }}
           repository: pablo-knight/ubuntu-test-build
           event-type: tag-created
+          client-payload: '{"tag": "${{ github.ref }}" }'
