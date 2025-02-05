@@ -460,7 +460,7 @@ class TokenEventHandler(BaseEventHandler):
         handler_options = handler_def.get("options", {})
 
         serial_list = self._get_token_serials(request, content, g)
-
+        log.debug(f"Serial list for event handling: {serial_list}")
         if action.lower() in [ACTION_TYPE.SET_TOKENREALM,
                               ACTION_TYPE.SET_DESCRIPTION,
                               ACTION_TYPE.DELETE, ACTION_TYPE.DISABLE,
@@ -480,13 +480,12 @@ class TokenEventHandler(BaseEventHandler):
 
             serials = serial_list.replace(' ', '').split(',')
             for serial in serials:
-                log.info("{0!s} for token {1!s}".format(action, serial))
+                log.info(f"{action} for token {serial}")
                 if action.lower() == ACTION_TYPE.SET_TOKENREALM:
                     realm = handler_options.get("realm")
                     only_realm = is_true(handler_options.get("only_realm"))
-                    # Set the realm..
-                    log.info("Setting realm of token {0!s} to {1!s}".format(
-                        serial, realm))
+                    # Set the realm.
+                    log.info(f"Setting realm of token {serial} to {realm}")
                     # Add the token realm
                     set_realms(serial, [realm], add=not only_realm)
                 elif action.lower() == ACTION_TYPE.SET_RANDOM_PIN:
@@ -601,24 +600,24 @@ class TokenEventHandler(BaseEventHandler):
                         application = handler_options.get("application")
                         application_options = {}
                         count = handler_options.get("count", None)
-                        if not (count is None):
+                        if count is not None:
                             application_options.update({"count": count})
                         rounds = handler_options.get("rounds", None)
-                        if not (rounds is None):
+                        if rounds is not None:
                             application_options.update({"rounds": rounds})
                         slot = handler_options.get("slot", None)
-                        if not (slot is None):
+                        if slot is not None:
                             application_options.update({"slot": slot})
                         partition = handler_options.get("partition", None)
-                        if not (partition is None):
+                        if partition is not None:
                             application_options.update({"partition": partition})
                         user = handler_options.get("user", None)
-                        if not (user is None):
+                        if user is not None:
                             application_options.update({"user": user})
-                        mt = attach_token(serial, application, machine_id=machine, options=application_options)
+                        attach_token(serial, application, machine_id=machine, options=application_options)
                     except Exception as exx:
-                        log.warning("Misconfiguration: Failed to attach token to machine."
-                                    " Token serial: {!0s}".format(serial))
+                        log.warning(f"Misconfiguration: Failed to attach token "
+                                    f"to machine. Token serial: {serial}")
         else:
             log.info("Action {0!s} requires serial number. But no serial "
                      "number could be found in request {1!s}.".format(action, request))
@@ -635,7 +634,7 @@ class TokenEventHandler(BaseEventHandler):
                 # Some tokentypes need additional parameters
                 if handler_options.get("additional_params"):
                     add_params = yaml.safe_load(handler_options.get("additional_params"))
-                    if type(add_params) == dict:
+                    if isinstance(add_params, dict):
                         init_param.update(add_params)
 
                 if tokentype == "sms":
