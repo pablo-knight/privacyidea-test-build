@@ -1,16 +1,18 @@
 #!/bin/sh
+set -e
 
 PI_UPDATE="${PI_UPDATE:-false}"
 PI_PORT="${PI_PORT:-8080}"
 PI_LOGLEVEL="${PI_LOGLEVEL:-INFO}"
 
+# Database needs a second
+echo "waiting for database "
+sleep 5
+
 export PATH="/privacyidea/venv/bin:$PATH"
 
-set -e
 # Virtuelle Umgebung aktivieren
-. /privacyidea/venv/bin/activate
-
-#source activate
+source activate
 
 # create enckey
 if [ ! -s /privacyidea/etc/persistent/enckey ]
@@ -46,12 +48,13 @@ then
 	pi-manage setup create_audit_keys
 fi
 
+# optional
 # import resolver.json if exists
-if [ -f /privacyidea/etc/persistent/resolver.json ]
-then
-	pi-manage config import -i /privacyidea/etc/persistent/resolver.json
+#if [ -f /privacyidea/etc/persistent/resolver.json ]
+#then
+#	pi-manage config import -i /privacyidea/etc/persistent/resolver.json
 #	mv /privacyidea/etc/persistent/resolver.json /privacyidea/etc/persistent/resolver.json_deployed
-fi
+#fi
 
 # run DB schema update if requested
 if [ "$1" == "PI_UPDATE" ]
